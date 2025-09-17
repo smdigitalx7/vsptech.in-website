@@ -70,7 +70,7 @@ export default function Navbar() {
               src="/assets/VSP_Logo.png"
               alt="VSP Technologies Logo"
               className={`w-auto transition-all duration-300 ${
-                isScrolled ? "h-16" : "h-32"
+                isScrolled ? "h-16" : "lg:h-32 h-24"
               }`}
             />
             {/* <span className="font-bold text-xl text-foreground hidden sm:block">
@@ -111,12 +111,14 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             className={`lg:hidden ${
-              isScrolled ? "text-foreground" : "text-white"
+              isScrolled
+                ? "text-foreground"
+                : "text-primary bg-primary/10 rounded-full p-2"
             } hover:text-primary transition-colors duration-200`}
             onClick={toggleMobileMenu}
             data-testid="button-mobile-menu"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-8 h-8" />
           </button>
         </div>
       </div>

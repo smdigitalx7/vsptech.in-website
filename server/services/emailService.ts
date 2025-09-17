@@ -1,15 +1,18 @@
-import { MailService } from "@sendgrid/mail";
+import Mailjet from "node-mailjet";
 
-if (!process.env.SENDGRID_API_KEY) {
+const MJ_API_KEY = process.env.MJ_API_KEY;
+const MJ_API_SECRET = process.env.MJ_API_SECRET;
+
+if (!MJ_API_KEY || !MJ_API_SECRET) {
   console.warn(
-    "SENDGRID_API_KEY environment variable is not set - email functionality will be disabled"
+    "Mailjet credentials (MJ_API_KEY, MJ_API_SECRET) are not set - email functionality will be disabled"
   );
 }
 
-const mailService = new MailService();
-if (process.env.SENDGRID_API_KEY) {
-  mailService.setApiKey(process.env.SENDGRID_API_KEY);
-}
+const mailjet =
+  MJ_API_KEY && MJ_API_SECRET
+    ? new Mailjet({ apiKey: MJ_API_KEY, apiSecret: MJ_API_SECRET })
+    : null;
 
 interface EmailParams {
   to: string;
@@ -21,23 +24,39 @@ interface EmailParams {
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
-    if (!process.env.SENDGRID_API_KEY) {
-      console.error("SendGrid API key is not configured");
+    if (!mailjet) {
+      console.error("Mailjet credentials are not configured");
       return false;
     }
 
-    await mailService.send({
-      to: params.to,
-      from: params.from,
-      subject: params.subject,
-      text: params.text || "",
-      html: params.html,
+    const response = await mailjet.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From: {
+            Email: params.from,
+            Name: "VSP Technologies",
+          },
+          To: [
+            {
+              Email: params.to,
+            },
+          ],
+          Subject: params.subject,
+          TextPart: params.text || "",
+          HTMLPart: params.html || undefined,
+        },
+      ],
     });
 
-    console.log("Email sent successfully");
+    if (response?.body?.Messages?.[0]?.Status !== "success") {
+      console.error("Mailjet send failed", response?.body);
+      return false;
+    }
+
+    console.log("Mail sent via Mailjet successfully");
     return true;
   } catch (error) {
-    console.error("SendGrid email error:", error);
+    console.error("Mailjet email error:", error);
     return false;
   }
 }

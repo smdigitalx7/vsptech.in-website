@@ -49,6 +49,12 @@ export default function Hero() {
       ref={heroRef}
       data-testid="section-hero"
     >
+      {/* Full-section Background Image */}
+      <img
+        src="/assets/Training.jpg"
+        alt="Training section background"
+        className="absolute inset-0 w-full h-full object-cover opacity-5"
+      />
       {/* Professional Background Pattern */}
       <div className="absolute inset-0">
         {/* Subtle brand accent */}
@@ -88,8 +94,8 @@ export default function Hero() {
           {/* Main Content */}
           <div className="lg:col-span-7 text-center lg:text-left">
             <div className={`${heroVisible ? "animate-fade-in" : "opacity-0"}`}>
-              <div className="inline-flex items-center px-6 py-3 bg-primary/10 rounded-full text-primary font-semibold mb-8 border border-primary/20">
-                <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
+              <div className="inline-flex items-center px-6 py-3 bg-primary/10 rounded-full text-primary text-xs md:text-sm font-semibold mb-6 border border-primary/20 mt-12 lg:mt-0">
+                <div className="w-2 h-2 bg-primary rounded-full mr-3 "></div>
                 Trusted by Leading Educational Institutions
               </div>
 
@@ -97,6 +103,7 @@ export default function Hero() {
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 leading-tight"
                 data-testid="text-hero-title"
               >
+                {/* <span className="text-primary text-xl ">We </span> */}
                 Prepare Students for
                 <span className="block text-primary mt-2">
                   Successful Careers
@@ -110,7 +117,7 @@ export default function Hero() {
               } delay-200`}
             >
               <p
-                className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl lg:max-w-none leading-relaxed"
+                className="text-base md:text-lg text-muted-foreground mb-10 max-w-2xl lg:max-w-none leading-relaxed"
                 data-testid="text-hero-description"
               >
                 Partner with VSP Technologies to deliver comprehensive campus
@@ -127,7 +134,7 @@ export default function Hero() {
             >
               <button
                 onClick={() => scrollToSection("about")}
-                className="group bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 flex items-center"
+                className="group bg-primary text-primary-foreground px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 flex items-center"
                 data-testid="button-learn-more"
               >
                 <BookOpen className="w-5 h-5 mr-2 group-hover:translate-x-0.5 transition-transform duration-300" />
@@ -135,7 +142,7 @@ export default function Hero() {
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="group border-2 border-primary text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center"
+                className="group border-2 border-primary text-primary px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center"
                 data-testid="button-get-started"
               >
                 <Target className="w-5 h-5 mr-2 group-hover:translate-x-0.5 transition-transform duration-300" />
@@ -169,7 +176,13 @@ export default function Hero() {
               </div> */}
 
               {/* Current Stat Display */}
-              <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
+              <div className="relative overflow-hidden bg-card rounded-2xl p-8 shadow-lg border border-border py-20">
+                {/* Blurred background image */}
+                <img
+                  src="/assets/Training.jpg"
+                  alt="Training background"
+                  className="absolute inset-0 w-full h-full object-cover scale-110 opacity-30 pointer-events-none "
+                />
                 <div className="text-center">
                   <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mx-auto mb-6 transition-all duration-500">
                     {(() => {
@@ -179,10 +192,10 @@ export default function Hero() {
                       );
                     })()}
                   </div>
-                  <div className="text-4xl font-bold text-primary mb-2 transition-all duration-500">
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2 transition-all duration-500">
                     {stats[currentStat].number}
                   </div>
-                  <div className="text-muted-foreground font-medium text-lg mb-6">
+                  <div className="text-muted-foreground font-medium text-base md:text-lg mb-6">
                     {stats[currentStat].label}
                   </div>
 
@@ -229,7 +242,7 @@ export default function Hero() {
       </div>
 
       {/* Professional Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-0 lg:bottom-6 left-1/2 transform -translate-x-1/2 ">
         {/* <div className="w-6 h-10 border-2 border-primary/30 rounded-full flex justify-center animate-bounce">
           <div className="w-1 h-3 bg-primary rounded-full mt-2"></div>
         </div> */}
