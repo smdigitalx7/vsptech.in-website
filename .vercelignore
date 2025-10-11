@@ -1,0 +1,32 @@
+# Development files
+dev-server.js
+start-dev.bat
+start-dev.sh
+test-*.js
+test-*.mjs
+
+# Environment files
+.env.local
+env.local.example
+
+# Documentation
+README.md
+DEPLOYMENT.md
+SETUP-GUIDE.md
+QUICK-FIX.md
+PRODUCTION-READY-SUMMARY.md
+
+# Git
+.git
+.gitignore
+
+# Node modules (handled by Vercel)
+node_modules
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

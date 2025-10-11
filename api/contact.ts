@@ -34,7 +34,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.warn("Mailjet credentials not configured - returning mock success");
     return res.status(200).json({
       success: true,
-      message: "Thank you for your message. We'll get back to you soon! (Email service not configured)",
+      message:
+        "Thank you for your message. We'll get back to you soon! (Email service not configured)",
     });
   }
 
