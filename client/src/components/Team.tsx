@@ -18,7 +18,7 @@ export default function Team() {
       role: "Star Rated Technical Trainer",
       experience: "17+ Years Experience",
       studentsTrained: "2,00,000+ Students Trained",
-      image: "/assets/Satish_VSP.jpg",
+      image: "/Satish_VSP.jpg",
       description: [
         "With 17+ years of experience partnering with educational institutions, he has delivered technical training programs across multiple colleges in various states. His institutional partnerships have resulted in successfully training around 2,00,000+ students, significantly enhancing placement rates for partner colleges and strengthening their industry reputation.",
         "As a Star-rated technical trainer, he brings proven expertise in designing institutional training programs that align with campus recruitment requirements. His specialized approach ensures students from partner institutions are well-prepared for competitive assessments and technical interviews, directly contributing to improved placement statistics that college administrators value.",
@@ -40,7 +40,7 @@ export default function Team() {
       role: "Co-ordinator",
       experience: "8 Years Experience",
       studentsTrained: "Institutional Partnership Coordination",
-      image: "/assets/Balaji.jpg",
+      image: "/Balaji.jpg",
       description: [
         "8+ Years of specialized experience coordinating institutional training partnerships and managing customized LMS platforms for educational institutions. His expertise ensures seamless integration of VSP training programs with college academic schedules and administrative requirements.",
       ],

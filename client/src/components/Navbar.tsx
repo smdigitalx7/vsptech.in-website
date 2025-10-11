@@ -67,7 +67,7 @@ export default function Navbar() {
             data-testid="navbar-logo"
           >
             <img
-              src="/assets/VSP_Logo.png"
+              src="/VSP_Logo.png"
               alt="VSP Technologies Logo"
               className={`w-auto transition-all duration-300 ${
                 isScrolled ? "h-16" : "lg:h-32 h-24"

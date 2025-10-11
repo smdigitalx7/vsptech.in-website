@@ -24,7 +24,7 @@ export default function MissionVision() {
     >
       {/* Full-section Background Image */}
       <img
-        src="/assets/Training.jpg"
+        src="/Training.jpg"
         alt="Mission & Vision background"
         className="absolute inset-0 w-full h-full object-cover opacity-30"
       />

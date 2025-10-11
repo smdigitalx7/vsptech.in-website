@@ -33,7 +33,7 @@ export default function CRTServices() {
         "Comprehensive programming training that prepares your students for technical interviews",
       color: "primary",
       bgPattern: "bg-primary/5",
-      image: "/assets/TechnicalTraining.jpg",
+      image: "/TechnicalTraining.jpg",
     },
     {
       icon: Brain,
@@ -43,7 +43,7 @@ export default function CRTServices() {
         "Systematic training to improve your students' analytical and logical thinking abilities",
       color: "secondary",
       bgPattern: "bg-secondary/5",
-      image: "/assets/AptitudeTraining.jpg",
+      image: "/AptitudeTraining.jpg",
     },
     {
       icon: MessageCircle,
@@ -53,7 +53,7 @@ export default function CRTServices() {
         "Personality development programs that enhance your students' professional presentation",
       color: "accent",
       bgPattern: "bg-accent/5",
-      image: "/assets/Communicationtraining.jpg",
+      image: "/Communicationtraining.jpg",
     },
     {
       icon: Handshake,
@@ -63,7 +63,7 @@ export default function CRTServices() {
         "Comprehensive mock interview sessions to boost your institution's placement rates",
       color: "primary",
       bgPattern: "bg-primary/5",
-      image: "/assets/InterviewPrep.jpg",
+      image: "/InterviewPrep.jpg",
     },
     {
       icon: BarChart3,
@@ -73,7 +73,7 @@ export default function CRTServices() {
         "Real-time monitoring system providing detailed progress reports to your administration",
       color: "secondary",
       bgPattern: "bg-secondary/5",
-      image: "/assets/LMSTracking.jpg",
+      image: "/LMSTracking.jpg",
     },
   ];
 

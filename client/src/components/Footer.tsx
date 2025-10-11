@@ -45,7 +45,7 @@ export default function Footer() {
                 data-testid="footer-logo"
               >
                 <img
-                  src="/assets/VSP_Logo.png"
+                  src="/VSP_Logo.png"
                   alt="VSP Technologies Logo"
                   className="h-10 w-auto"
                 />

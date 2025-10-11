@@ -242,7 +242,7 @@ export default function About() {
                 <div className="relative overflow-hidden rounded-xl shadow-sm border border-border bg-gradient-to-t from-black to-primary  ">
                   <img
                     // src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
-                    src="/assets/Training2.jpg"
+                    src="/Training2.jpg"
                     alt="Students collaborating in modern learning environment"
                     className="w-full h-64 object-cover opacity-60"
                     data-testid="img-about-students"

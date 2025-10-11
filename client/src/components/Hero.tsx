@@ -51,7 +51,7 @@ export default function Hero() {
     >
       {/* Full-section Background Image */}
       <img
-        src="/assets/Training.jpg"
+        src="/Training.jpg"
         alt="Training section background"
         className="absolute inset-0 w-full h-full object-cover opacity-5"
       />
@@ -179,7 +179,7 @@ export default function Hero() {
               <div className="relative overflow-hidden bg-card rounded-2xl p-8 shadow-lg border border-border py-20">
                 {/* Blurred background image */}
                 <img
-                  src="/assets/Training.jpg"
+                  src="/Training.jpg"
                   alt="Training background"
                   className="absolute inset-0 w-full h-full object-cover scale-110 opacity-30 pointer-events-none "
                 />
