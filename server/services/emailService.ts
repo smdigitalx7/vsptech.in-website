@@ -1,3 +1,4 @@
+import "dotenv/config";
 import Mailjet from "node-mailjet";
 
 const MJ_API_KEY = process.env.MJ_API_KEY;
@@ -20,20 +21,32 @@ interface EmailParams {
   subject: string;
   text?: string;
   html?: string;
+  replyTo?: string;
 }
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
+    console.log("=== EMAIL SENDING DEBUG ===");
+    console.log("Mailjet configured:", !!mailjet);
+    console.log("From:", params.from);
+    console.log("To:", params.to);
+    console.log("Subject:", params.subject);
+
     if (!mailjet) {
       console.error("Mailjet credentials are not configured");
       return false;
     }
 
-    const response = await mailjet.post("send", { version: "v3.1" }).request({
+    const fromEmail =
+      params.from ||
+      process.env.FROM_EMAIL ||
+      process.env.CONTACT_EMAIL ||
+      "noreply@example.com";
+    const emailData: any = {
       Messages: [
         {
           From: {
-            Email: params.from,
+            Email: fromEmail,
             Name: "VSP Technologies",
           },
           To: [
@@ -41,22 +54,31 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
               Email: params.to,
             },
           ],
+          ReplyTo: params.replyTo ? { Email: params.replyTo } : undefined,
           Subject: params.subject,
           TextPart: params.text || "",
           HTMLPart: params.html || undefined,
         },
       ],
-    });
+    };
+
+    console.log("Sending email with data:", JSON.stringify(emailData, null, 2));
+
+    const response = await mailjet
+      .post("send", { version: "v3.1" })
+      .request(emailData as any);
+
+    console.log("Mailjet response:", JSON.stringify(response.body, null, 2));
 
     if (response?.body?.Messages?.[0]?.Status !== "success") {
       console.error("Mailjet send failed", response?.body);
       return false;
     }
 
-    console.log("Mail sent via Mailjet successfully");
+    console.log("✅ Mail sent via Mailjet successfully");
     return true;
   } catch (error) {
-    console.error("Mailjet email error:", error);
+    console.error("❌ Mailjet email error:", error);
     return false;
   }
 }

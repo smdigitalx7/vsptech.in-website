@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "set NODE_ENV=development && tsx server/index.ts",
+    "dev": "set NODE_ENV=development && set MJ_API_KEY=b5f26afa422abb05c1c0c84cfc0882b7 && set MJ_API_SECRET=40c0a0ab3d0a445a3f086d1dc3cd2b0d && set CONTACT_EMAIL=smdigitalx@gmail.com && set FROM_EMAIL=smdigitalx@gmail.com && tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "set NODE_ENV=production && node dist/index.js",
     "check": "tsc",
@@ -47,6 +47,7 @@
     "cmdk": "^1.1.1",
     "connect-pg-simple": "^10.0.0",
     "date-fns": "^3.6.0",
+    "dotenv": "^17.2.2",
     "drizzle-orm": "^0.39.1",
     "drizzle-zod": "^0.7.0",
     "embla-carousel-react": "^8.6.0",
