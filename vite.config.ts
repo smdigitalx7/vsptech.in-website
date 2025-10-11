@@ -18,7 +18,6 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     minify: "esbuild",
-    assetsDir: "assets",
     rollupOptions: {
       output: {
         manualChunks: {
@@ -28,14 +27,6 @@ export default defineConfig({
             "@radix-ui/react-dialog",
             "@radix-ui/react-dropdown-menu",
           ],
-        },
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split('.');
-          const ext = info[info.length - 1];
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
-            return `assets/images/[name]-[hash][extname]`;
-          }
-          return `assets/[name]-[hash][extname]`;
         },
       },
     },
