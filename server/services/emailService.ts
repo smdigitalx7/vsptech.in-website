@@ -37,6 +37,12 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
       return false;
     }
 
+    // Validate required parameters
+    if (!params.to || !params.subject) {
+      console.error("Missing required email parameters");
+      return false;
+    }
+
     const fromEmail =
       params.from ||
       process.env.FROM_EMAIL ||
