@@ -9,16 +9,15 @@ A modern, responsive website for VSP Technologies - a campus recruitment trainin
 - 📱 **Fully Responsive** - Optimized for all devices
 - ⚡ **Fast Performance** - Optimized build and loading
 - 🔒 **Secure** - Security headers and best practices
-- 📧 **Contact Form** - Integrated email service with Mailjet
+- 📧 **Contact Form** - Integrated with FastAPI backend and Brevo email service
 - 🚀 **Vercel Ready** - Optimized for Vercel deployment
 
 ## Tech Stack
 
 - **Frontend**: React 18, TypeScript, Vite
 - **UI**: Radix UI, Tailwind CSS, Framer Motion
-- **Backend**: Vercel Serverless Functions
-- **Email**: Mailjet API
-- **Deployment**: Vercel
+- **Backend**: FastAPI (Python) with Brevo email service
+- **Deployment**: Vercel (Frontend), Render/VPS (Backend)
 
 ## Getting Started
 
@@ -49,14 +48,12 @@ npm install
 cp env.example .env.local
 ```
 
-4. Update the `.env.local` file with your actual values:
+4. Update the `.env.local` file with your actual values (optional):
 
 ```env
 NODE_ENV=development
-MJ_API_KEY=your_mailjet_api_key
-MJ_API_SECRET=your_mailjet_api_secret
-CONTACT_EMAIL=info@vsptech.com
-FROM_EMAIL=noreply@vsptech.com
+# Optional: Override backend API URL (defaults to deployed backend)
+VITE_API_BASE_URL=https://vsptech-mailservice-brevo.onrender.com
 ```
 
 ### Development
@@ -88,13 +85,10 @@ npm run preview
 ### Automatic Deployment
 
 1. Connect your GitHub repository to Vercel
-2. Set the following environment variables in Vercel dashboard:
+2. Set the following environment variables in Vercel dashboard (optional):
 
    - `NODE_ENV`: `production`
-   - `MJ_API_KEY`: Your Mailjet API key
-   - `MJ_API_SECRET`: Your Mailjet API secret
-   - `CONTACT_EMAIL`: Contact email address
-   - `FROM_EMAIL`: From email address
+   - `VITE_API_BASE_URL`: Your backend API URL (defaults to deployed backend)
 
 3. Deploy! Vercel will automatically build and deploy your application.
 
@@ -121,9 +115,7 @@ vercel --prod
 ## Project Structure
 
 ```
-├── api/                    # Vercel serverless functions
-│   ├── contact.ts         # Contact form handler
-│   └── health.ts          # Health check endpoint
+├── backend/               # FastAPI backend (separate service)
 ├── client/                # Frontend React application
 │   ├── src/
 │   │   ├── components/    # React components
@@ -133,7 +125,6 @@ vercel --prod
 │   ├── assets/            # Static assets
 │   ├── public/            # Public files
 │   └── index.html         # HTML template
-├── server/                # Server utilities (legacy)
 ├── shared/                # Shared schemas and types
 ├── vercel.json           # Vercel configuration
 └── vite.config.ts        # Vite configuration
@@ -141,18 +132,19 @@ vercel --prod
 
 ## Environment Variables
 
-| Variable        | Description                  | Required |
-| --------------- | ---------------------------- | -------- |
-| `NODE_ENV`      | Environment mode             | Yes      |
-| `MJ_API_KEY`    | Mailjet API key              | Yes      |
-| `MJ_API_SECRET` | Mailjet API secret           | Yes      |
-| `CONTACT_EMAIL` | Contact form recipient email | Yes      |
-| `FROM_EMAIL`    | Email sender address         | Yes      |
+| Variable           | Description                        | Required |
+| ------------------ | ---------------------------------- | -------- |
+| `NODE_ENV`         | Environment mode                   | No       |
+| `VITE_API_BASE_URL`| Backend API URL (optional override) | No       |
 
 ## API Endpoints
 
+The frontend communicates with a separate FastAPI backend:
+- Backend URL: `https://vsptech-mailservice-brevo.onrender.com`
 - `POST /api/contact` - Submit contact form
-- `GET /api/health` - Health check
+- `GET /health` - Health check
+
+See `backend/README.md` for backend setup and deployment.
 
 ## Performance Optimizations
 

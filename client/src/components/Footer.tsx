@@ -72,7 +72,26 @@ export default function Footer() {
                 data-testid="footer-email"
               >
                 <Mail className="w-4 h-4 text-secondary" />
-                <span>info@vsptech.com</span>
+                <a
+                  href="mailto:contact@vsptech.in"
+                  className="hover:text-primary transition-colors"
+                >
+                  contact@vsptech.in
+                </a>
+              </div>
+              <div
+                className="flex items-center space-x-2 text-muted-foreground mt-2"
+                data-testid="footer-website"
+              >
+                <span className="text-sm">🌐</span>
+                <a
+                  href="https://vsptech.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  vsptech.in
+                </a>
               </div>
             </div>
 
@@ -116,12 +135,24 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div
-              className="text-muted-foreground text-sm"
+              className="text-muted-foreground text-sm text-center md:text-left"
               data-testid="footer-copyright"
             >
-              © 2024 VSP Technologies. All rights reserved.
+              <div>© 2024 VSP Technologies. All rights reserved.</div>
+              <div className="mt-1 text-xs">
+                Developed with{" "}
+                <span className="text-red-500">❤️</span> by{" "}
+                <a
+                  href="https://www.smdigitalx.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  SMDigitalX
+                </a>
+              </div>
             </div>
             <div
               className="flex space-x-6 mt-4 md:mt-0"

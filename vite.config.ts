@@ -34,14 +34,8 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
-    proxy: {
-      // Proxy API requests to a local server
-      "/api": {
-        target: "http://localhost:3001",
-        changeOrigin: true,
-        secure: false,
-      },
-    },
+    // API requests are handled by external FastAPI backend
+    // Configure via VITE_API_BASE_URL environment variable
   },
   preview: {
     port: 3000,

@@ -186,10 +186,10 @@ export default function Contact() {
                         <Mail className="w-6 h-6 text-secondary mt-1 flex-shrink-0" />
                         <div>
                           <h4 className="text-lg font-semibold text-foreground mb-1">
-                            Partnership Inquiries
+                            Contact Us
                           </h4>
                           <p className="text-muted-foreground">
-                            partnerships@vsptech.com
+                            contact@vsptech.in
                           </p>
                           <p className="text-muted-foreground text-sm">
                             Dedicated institutional support
@@ -220,8 +220,8 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Professional Office Image */}
-              <div className="relative group overflow-hidden rounded-lg shadow-sm">
+              {/* Professional Office Image - Commented out */}
+              {/* <div className="relative group overflow-hidden rounded-lg shadow-sm">
                 <img
                   src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
                   alt="Modern office building with glass facade in urban setting"
@@ -239,12 +239,12 @@ export default function Contact() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Professional Stats */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 mt-6">
                 <div
-                  className="bg-card rounded-lg p-4 text-center border border-border shadow-sm"
+                  className="bg-card rounded-lg p-5 text-center border border-border shadow-sm hover:shadow-md transition-shadow duration-300"
                   data-testid="stat-support"
                 >
                   <Headphones className="w-6 h-6 text-primary mx-auto mb-3" />
@@ -257,7 +257,7 @@ export default function Contact() {
                 </div>
 
                 <div
-                  className="bg-card rounded-lg p-4 text-center border border-border shadow-sm"
+                  className="bg-card rounded-lg p-5 text-center border border-border shadow-sm hover:shadow-md transition-shadow duration-300"
                   data-testid="stat-focus"
                 >
                   <Target className="w-6 h-6 text-secondary mx-auto mb-3" />
