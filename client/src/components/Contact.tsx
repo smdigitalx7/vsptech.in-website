@@ -4,7 +4,8 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { apiRequest } from "@/lib/queryClient";
+import { contactService, type ContactFormData as ApiContactData } from "@/lib/contactApi";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,6 +35,9 @@ import {
   Target,
   Loader,
   MessageCircle,
+  CheckCircle2,
+  AlertCircle,
+  ArrowRight,
 } from "lucide-react";
 
 const contactFormSchema = z.object({
@@ -69,32 +73,11 @@ export default function Contact() {
   });
 
   const contactMutation = useMutation({
-    mutationFn: async (data: Omit<ContactFormData, "agree">) => {
-      const response = await apiRequest(
-        "POST",
-        "https://testverseapi.vsptech.in/api/v1/contact",
-        data
-      );
-      return response.json();
+    mutationFn: async (data: ApiContactData) => {
+      return contactService.submit(data);
     },
-    onSuccess: (data) => {
-      toast({
-        title: "Message Sent Successfully!",
-        description:
-          data.message ||
-          "Thank you for your message. We'll get back to you soon!",
-        variant: "success",
-      });
+    onSuccess: () => {
       form.reset();
-    },
-    onError: (error) => {
-      toast({
-        title: "Error Sending Message",
-        description:
-          error.message ||
-          "Sorry, there was an error sending your message. Please try again later.",
-        variant: "destructive",
-      });
     },
   });
 
@@ -208,199 +191,242 @@ export default function Contact() {
           <div
             className={`lg:col-span-8 animate-slide-in-right`}
           >
-            <div className="bg-white dark:bg-zinc-900 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 shadow-sm border border-border/50 relative overflow-hidden group">
+            <div className={cn(
+              "bg-white dark:bg-zinc-900 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-border/50 relative overflow-hidden group min-h-[600px] flex flex-col transition-all duration-500",
+              contactMutation.isSuccess && "bg-emerald-50/80 dark:bg-emerald-950/20 border-emerald-500/20"
+            )}>
               {/* Subtle top indicator */}
-              <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-primary to-secondary group-focus-within:h-2 transition-all"></div>
+              <div className={cn(
+                "absolute top-0 left-0 w-full h-1.5 transition-all",
+                contactMutation.isSuccess ? "bg-emerald-500" : "bg-gradient-to-r from-primary via-primary to-secondary group-focus-within:h-2"
+              )}></div>
               
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-6 md:space-y-8"
-                >
-                  <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
-                    <FormField
-                      control={form.control}
-                      name="firstName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
-                            First name
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="John"
-                              className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="lastName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
-                             Last name
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Doe"
-                              className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+              {contactMutation.isSuccess ? (
+                <div className="flex-1 flex flex-col items-center justify-center p-8 md:p-12 text-center animate-in fade-in zoom-in duration-500">
+                  <div className="w-20 h-20 md:w-24 md:h-24 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-8 relative">
+                    <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping opacity-20"></div>
+                    <CheckCircle2 className="w-10 h-10 md:w-12 md:h-12 text-emerald-600 dark:text-emerald-400" />
                   </div>
-
-                  <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
-                            Email address
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              type="email"
-                              placeholder="john@university.edu"
-                              className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="organization"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
-                            Institution / college
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Institution Name"
-                              className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="subject"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
-                          I'm interested in
-                        </FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold text-foreground">
-                              <SelectValue placeholder="Select interest area" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="rounded-xl border-border">
-                            <SelectItem value="institutional-partnership">
-                              Institutional Training Partnership
-                            </SelectItem>
-                            <SelectItem value="placement-enhancement">
-                              Placement Rate Enhancement
-                            </SelectItem>
-                            <SelectItem value="customized-curriculum">
-                              Customized Training Curriculum
-                            </SelectItem>
-                            <SelectItem value="lms-platform">
-                              LMS Platform Integration
-                            </SelectItem>
-                            <SelectItem value="general-inquiry">
-                              General Partnership Inquiry
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
-                          Message
-                        </FormLabel>
-                        <FormControl>
-                          <Textarea
-                            rows={4}
-                            placeholder="Tell us about your requirements..."
-                            className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-4 px-5 focus:ring-primary focus:border-primary resize-none transition-all font-semibold"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="agree"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 text-foreground">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            className="rounded-md border-border/50 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                          />
-                        </FormControl>
-                        <div className="space-y-1">
-                          <FormLabel className="text-[10px] md:text-xs font-semibold text-muted-foreground leading-relaxed">
-                            I agree to the processing of my personal data and to
-                            be contacted regarding this inquiry.
-                          </FormLabel>
-                          <FormMessage />
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button
-                    type="submit"
-                    variant="premium"
-                    disabled={contactMutation.isPending}
-                    className="w-full rounded-xl py-7 md:py-8 font-extrabold text-base md:text-lg"
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-emerald-900 dark:text-emerald-100 mb-4 tracking-tight">
+                    Inquiry Received!
+                  </h3>
+                  <p className="text-emerald-800/70 dark:text-emerald-200/70 text-lg md:text-xl font-medium max-w-md mx-auto leading-relaxed mb-10">
+                    Thank you for reaching out to VSP Technologies. Our team is now reviewing your requirements and will connect with you shortly.
+                  </p>
+                  <Button 
+                    onClick={() => contactMutation.reset()}
+                    className="rounded-xl px-8 py-6 font-bold bg-emerald-600 hover:bg-emerald-700 text-white border-none shadow-lg shadow-emerald-200 dark:shadow-none group"
                   >
-                    {contactMutation.isPending ? (
-                      <Loader className="w-6 h-6 animate-spin" />
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5 mr-3" />
-                        Submit partnership inquiry
-                      </>
-                    )}
+                    Send another message
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                </form>
-              </Form>
+                </div>
+              ) : (
+                <div className="p-6 md:p-12 transition-all duration-300">
+                  {contactMutation.isError && (
+                    <div className="mb-8 p-6 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-2xl flex items-start space-x-4 text-red-800 dark:text-red-200 animate-in slide-in-from-top-4 duration-500 shadow-sm">
+                      <div className="w-10 h-10 bg-red-100 dark:bg-red-900/50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <AlertCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <h4 className="font-bold text-lg leading-tight italic">Submission Interrupted</h4>
+                        <p className="text-sm font-semibold opacity-90">
+                          We couldn't process your request at this moment. Please verify your connection or try again. We value your interest!
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-6 md:space-y-8"
+                    >
+                      <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
+                        <FormField
+                          control={form.control}
+                          name="firstName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
+                                First name
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="John"
+                                  className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="lastName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
+                                 Last name
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="Doe"
+                                  className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
+                                Email address
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="email"
+                                  placeholder="john@university.edu"
+                                  className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="organization"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
+                                Institution / college
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="Institution Name"
+                                  className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="subject"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
+                              I'm interested in
+                            </FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-6 md:py-7 px-5 focus:ring-primary focus:border-primary transition-all font-semibold text-foreground">
+                                  <SelectValue placeholder="Select interest area" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="rounded-xl border-border">
+                                <SelectItem value="Institutional Training Partnership">
+                                  Institutional Training Partnership
+                                </SelectItem>
+                                <SelectItem value="Placement Rate Enhancement">
+                                  Placement Rate Enhancement
+                                </SelectItem>
+                                <SelectItem value="Customized Training Curriculum">
+                                  Customized Training Curriculum
+                                </SelectItem>
+                                <SelectItem value="LMS Platform Integration">
+                                  LMS Platform Integration
+                                </SelectItem>
+                                <SelectItem value="General Partnership Inquiry">
+                                  General Partnership Inquiry
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] md:text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">
+                              Message
+                            </FormLabel>
+                            <FormControl>
+                              <Textarea
+                                rows={4}
+                                placeholder="Tell us about your requirements..."
+                                className="bg-muted/30 dark:bg-zinc-800/50 border-border/50 rounded-xl py-4 px-5 focus:ring-primary focus:border-primary resize-none transition-all font-semibold"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="agree"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 text-foreground">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                                className="rounded-md border-border/50 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                              />
+                            </FormControl>
+                            <div className="space-y-1">
+                              <FormLabel className="text-[10px] md:text-xs font-semibold text-muted-foreground leading-relaxed cursor-pointer">
+                                I agree to the processing of my personal data and to
+                                be contacted regarding this inquiry.
+                              </FormLabel>
+                              <FormMessage />
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+
+                      <Button
+                        type="submit"
+                        variant="premium"
+                        disabled={contactMutation.isPending}
+                        className="w-full rounded-xl py-7 md:py-8 font-extrabold text-base md:text-lg"
+                      >
+                        {contactMutation.isPending ? (
+                          <Loader className="w-6 h-6 animate-spin" />
+                        ) : (
+                          <>
+                            <Send className="w-5 h-5 mr-3" />
+                            Submit partnership inquiry
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </div>
+              )}
             </div>
           </div>
         </div>
