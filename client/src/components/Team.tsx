@@ -1,426 +1,156 @@
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { motion } from "framer-motion";
 import {
   Star,
-  Crown,
-  Calendar,
   Users,
   Briefcase,
-  ClipboardList,
-  Check,
+  ChevronRight,
+  TrendingUp,
 } from "lucide-react";
+import { useLocation } from "wouter";
+import { allTeamMembers } from "@/data/teamMembers";
 
 export default function Team() {
-  const { elementRef: teamRef, isVisible: teamVisible } = useScrollAnimation();
+  const [, setLocation] = useLocation();
+  const topExperts = allTeamMembers.slice(0, 3);
 
-  const teamMembers = [
-    {
-      name: "Mr. Satish Babu K",
-      role: "Star Rated Technical Trainer",
-      experience: "17+ Years Experience",
-      studentsTrained: "2,00,000+ Students Trained",
-      image: "/Satish_VSP.jpg",
-      description: [
-        "With 17+ years of experience partnering with educational institutions, he has delivered technical training programs across multiple colleges in various states. His institutional partnerships have resulted in successfully training around 2,00,000+ students, significantly enhancing placement rates for partner colleges and strengthening their industry reputation.",
-        "As a Star-rated technical trainer, he brings proven expertise in designing institutional training programs that align with campus recruitment requirements. His specialized approach ensures students from partner institutions are well-prepared for competitive assessments and technical interviews, directly contributing to improved placement statistics that college administrators value.",
-        "His deep expertise in C, C++, Java, Python, Data Structures, Algorithms, and DBMS, combined with innovative teaching methodologies developed specifically for institutional partnerships, has helped partner colleges achieve consistently high placement success rates. Educational administrators trust his systematic approach to transforming students into industry-ready professionals.",
-      ],
-      skills: ["C/C++", "Java", "Python", "Data Structures", "DBMS"],
-      skillColors: [
-        "bg-primary text-primary-foreground",
-        "bg-secondary text-secondary-foreground",
-        "bg-accent text-accent-foreground",
-        "bg-primary text-primary-foreground",
-        "bg-secondary text-secondary-foreground",
-      ],
-      bgColor: "primary",
-      accentColor: "primary",
-    },
-    {
-      name: "Mr. Rams",
-      role: "Facilitator and Coach",
-      experience: "26+ Years Experience",
-      studentsTrained: "5,00,000+ Students Trained",
-      image: "/Ram.jpg",
-      description: [
-        "Mr. Rams is a well-respected and highly skilled facilitator and coach with over 26 years of experience in different paths. After Graduation in B.A (English) from BASC, M.A (English) from Andhra University and Honorable degrees from CIEFL, Hyderabad, Rams started his career with the increasing steps of education/Teaching as a Teacher, Master, Lecturer, and professor in different reputed institutions and colleges.",
-        "Rams also worked as a Nodal faculty in NCERT – New Delhi on sake of A.P., and as a Coordinator to Kalinga University – Chhattisgarh from a reputed college of A.P. He has been invited for the 'Train the Trainer Programs' which are conducted by the Government. He tasted all the Academic coaching levels.",
-        "He is a professional Trainer in English, Motivation, Communication and Soft Skills. More than 5,00,000 students have been benefited in his experience.",
-      ],
-      skills: ["English Training", "Motivation", "Communication Skills", "Soft Skills"],
-      skillColors: [
-        "bg-accent text-accent-foreground",
-        "bg-primary text-primary-foreground",
-        "bg-secondary text-secondary-foreground",
-        "bg-accent text-accent-foreground",
-      ],
-      bgColor: "accent",
-      accentColor: "accent",
-    },
-    {
-      name: "Mr. Prasanth",
-      role: "Project Coordinator and Aptitude Trainer",
-      experience: "4 Years Experience",
-      studentsTrained: "Training Excellence & Project Management",
-      image: "/Prasanth.jpg",
-      description: [
-        "Mr. Prasanth brings 4 years of dedicated experience as a Project Coordinator and Aptitude Trainer, specializing in delivering comprehensive training programs that enhance student performance in competitive assessments and campus recruitment processes.",
-        "With his expertise in project coordination, he ensures seamless execution of training initiatives across multiple educational institutions, managing timelines, resources, and stakeholder communications effectively. His systematic approach to aptitude training has helped numerous students improve their analytical thinking and problem-solving capabilities.",
-        "As an aptitude trainer, Prasanth focuses on developing students' quantitative aptitude, logical reasoning, and data interpretation skills through innovative teaching methodologies and personalized attention. His commitment to student success and institutional partnership excellence makes him a valuable asset to the VSP Technologies team.",
-      ],
-      skills: ["Project Coordination", "Aptitude Training", "Training Management"],
-      skillColors: [
-        "bg-secondary text-secondary-foreground",
-        "bg-primary text-primary-foreground",
-        "bg-accent text-accent-foreground",
-      ],
-      bgColor: "secondary",
-      accentColor: "secondary",
-    },
-    {
-      name: "Mr. Balaji J",
-      role: "Co-ordinator",
-      experience: "8 Years Experience",
-      studentsTrained: "Institutional Partnership Coordination",
-      image: "/Balaji.jpg",
-      description: [
-        "8+ Years of specialized experience coordinating institutional training partnerships and managing customized LMS platforms for educational institutions. His expertise ensures seamless integration of VSP training programs with college academic schedules and administrative requirements.",
-      ],
-      responsibilities: [
-        "Coordinating comprehensive training programs tailored to institutional requirements",
-        "Managing customized LMS platforms for partner educational institutions",
-        "Ensuring seamless training delivery that aligns with college academic calendars",
-        "Facilitating communication between VSP Technologies and college administrators",
-        "Providing regular progress reports and placement outcome analytics to institutional partners",
-      ],
-      skills: ["Training Coordination", "LMS Management", "Project Management"],
-      skillColors: [
-        "bg-secondary text-secondary-foreground",
-        "bg-accent text-accent-foreground",
-        "bg-primary text-primary-foreground",
-      ],
-      bgColor: "secondary",
-      accentColor: "secondary",
-    },
-  ];
+  const navigateToTeamPage = () => {
+    setLocation("/team");
+  };
 
   return (
     <section
       id="team"
-      className="py-20 bg-background relative"
-      ref={teamRef}
+      className="py-16 md:py-24 bg-background relative overflow-hidden"
       data-testid="section-team"
     >
-      {/* Professional background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="team-grid"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 40 0 L 0 0 0 40"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-              />
-            </pattern>
-          </defs>
-          <rect
-            width="100%"
-            height="100%"
-            fill="url(#team-grid)"
-            className="text-foreground"
-          />
-        </svg>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 lg:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div
-            className={`text-center mb-16 ${
-              teamVisible ? "animate-fade-in" : "opacity-0"
-            }`}
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-primary/5 rounded-full blur-[100px] -z-0 translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-secondary/5 rounded-full blur-[100px] -z-0 -translate-x-1/3 translate-y-1/3" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Centered Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16 space-y-4 md:space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center space-x-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-[10px] md:text-xs font-bold uppercase tracking-wider border border-primary/20"
           >
-            <div className="inline-flex items-center px-6 py-3 bg-primary/10 rounded-full text-primary font-semibold mb-6 border border-primary/20">
-              <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
-              Your Trusted Training Partners
+            <Users className="w-4 h-4" />
+            <span>Our Specialist Team</span>
+          </motion.div>
+          
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-foreground mb-4 md:mb-6 leading-tight tracking-tight"
+          >
+            The Experts Driving <span className="text-primary italic font-serif">Career</span> Success
+          </motion.h2>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-base md:text-xl text-muted-foreground font-medium leading-relaxed"
+          >
+            Meet the dedicated professionals committed to bridging the gap between academic education and corporate careers with 40+ years of combined expertise.
+          </motion.p>
+        </div>
+
+        {/* Highlight Stats Bar - Responsive optimization */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto mb-16 md:mb-20">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-4 md:gap-6 p-5 md:p-6 bg-muted/30 dark:bg-zinc-800/50 rounded-2xl md:rounded-3xl border border-border/50 shadow-sm"
+          >
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-zinc-900 rounded-xl md:rounded-2xl flex items-center justify-center shadow-sm shrink-0 border border-border/50">
+              <TrendingUp className="w-6 h-6 md:w-7 md:h-7 text-primary" />
             </div>
-            <h2
-              className="text-4xl md:text-5xl font-bold mb-6 text-foreground"
-              data-testid="text-team-title"
-            >
-              Institutional <span className="text-primary">Training</span>{" "}
-              <span className="text-secondary">Specialists</span>
-            </h2>
-            <p
-              className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-              data-testid="text-team-subtitle"
-            >
-              Experienced professionals dedicated to enhancing placement success
-              rates for educational institutions across India
-            </p>
-          </div>
-
-          {/* Team Members - Magazine Style Layout */}
-          <div className="space-y-20">
-            {teamMembers.map((member, index) => (
-              <div
-                key={index}
-                className={`${
-                  teamVisible
-                    ? index === 0
-                      ? "animate-slide-in-left"
-                      : "animate-slide-in-right"
-                    : "opacity-0"
-                }`}
-                data-testid={`team-member-${index + 1}`}
-              >
-                <div
-                  className={`grid lg:grid-cols-5 gap-8 items-center ${
-                    index % 2 === 0 ? "" : "lg:grid-flow-col-dense"
-                  }`}
-                >
-                  {/* Professional Profile Image */}
-                  <div
-                    className={`lg:col-span-2 ${
-                      index % 2 === 0 ? "" : "lg:order-last"
-                    } relative`}
-                  >
-                    <div className="relative overflow-hidden rounded-xl shadow-lg border border-border">
-                      <img
-                        src={member.image}
-                        alt={`${member.name} - Professional trainer in modern educational setting`}
-                        className="w-full h-[400px] md:h-[550px] object-cover"
-                        data-testid={`img-team-member-${index + 1}`}
-                      />
-
-                      {/* Professional Badge */}
-                      <div className="absolute top-4 left-4">
-                        <div
-                          className={`${
-                            member.bgColor === "primary"
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-secondary text-secondary-foreground"
-                          } p-3 rounded-lg shadow-lg`}
-                        >
-                          <div className="text-lg font-bold">
-                            {member.experience.split(" ")[0]}
-                          </div>
-                          <div className="text-xs opacity-90">Years</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="lg:col-span-3 space-y-6">
-                    {/* Header */}
-                    <div className="space-x-4 flex">
-                      <h3
-                        className="text-3xl md:text-4xl font-bold text-foreground leading-tight"
-                        data-testid={`text-team-name-${index + 1}`}
-                      >
-                        {member.name}
-                      </h3>
-
-                      <div
-                        className={`inline-flex items-center px-4 py-2 rounded-full font-medium shadow-sm border ${
-                          member.bgColor === "primary"
-                            ? "bg-primary/10 text-primary border-primary/20"
-                            : "bg-secondary/10 text-secondary border-secondary/20"
-                        }`}
-                      >
-                        {index === 0 ? (
-                          <Star className="w-4 h-4 mr-2" />
-                        ) : (
-                          <Crown className="w-4 h-4 mr-2" />
-                        )}
-                        <span data-testid={`text-team-role-${index + 1}`}>
-                          {member.role}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Stats Row */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-card rounded-lg p-4 border border-border shadow-sm">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                            <Calendar className="w-5 h-5 text-primary-foreground" />
-                          </div>
-                          <div>
-                            <div
-                              className="text-foreground font-semibold text-sm"
-                              data-testid={`text-team-experience-${index + 1}`}
-                            >
-                              {member.experience}
-                            </div>
-                            <div className="text-muted-foreground text-xs">
-                              Teaching Excellence
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="bg-card rounded-lg p-4 border border-border shadow-sm">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                            {index === 0 ? (
-                              <Users className="w-5 h-5 text-secondary-foreground" />
-                            ) : (
-                              <Briefcase className="w-5 h-5 text-secondary-foreground" />
-                            )}
-                          </div>
-                          <div>
-                            <div
-                              className="text-foreground font-semibold text-xs leading-tight"
-                              data-testid={`text-team-achievement-${index + 1}`}
-                            >
-                              {member.studentsTrained}
-                            </div>
-                            <div className="text-muted-foreground text-xs">
-                              Impact & Results
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <div className="space-y-4">
-                      {member.description.map((paragraph, pIndex) => (
-                        <p
-                          key={pIndex}
-                          className="text-base text-muted-foreground leading-relaxed"
-                          data-testid={`text-team-description-${index + 1}-${
-                            pIndex + 1
-                          }`}
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-
-                    {/* Responsibilities */}
-                    {member.responsibilities && (
-                      <div>
-                        <h4 className="text-foreground font-bold mb-4 flex items-center text-base">
-                          Key Responsibilities
-                        </h4>
-                        <ul
-                          className="space-y-3"
-                          data-testid={`list-team-responsibilities-${
-                            index + 1
-                          }`}
-                        >
-                          {member.responsibilities.map(
-                            (responsibility, rIndex) => (
-                              <li
-                                key={rIndex}
-                                className="flex items-start text-muted-foreground"
-                              >
-                                <div className="w-5 h-5 bg-accent rounded flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
-                                  <Check className="w-3 h-3 text-accent-foreground" />
-                                </div>
-                                <span className="leading-relaxed text-sm">
-                                  {responsibility}
-                                </span>
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Skills */}
-                    <div
-                      className="flex flex-wrap gap-3"
-                      data-testid={`skills-team-member-${index + 1}`}
-                    >
-                      {member.skills.map((skill, sIndex) => (
-                        <span
-                          key={sIndex}
-                          className={`px-3 py-1.5 rounded-lg font-medium text-sm transition-all duration-300 ${member.skillColors[sIndex]}`}
-                          data-testid={`skill-${index + 1}-${sIndex + 1}`}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Professional Divider */}
-                {index < teamMembers.length - 1 && (
-                  <div className="flex items-center justify-center mt-12">
-                    <div className="w-24 h-px bg-border"></div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Professional Team Stats */}
-          <div
-            className={`mt-16 ${teamVisible ? "animate-fade-in" : "opacity-0"}`}
-            style={{ animationDelay: "0.8s" }}
+            <div>
+              <h4 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight">98% Success</h4>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Placement Rate Growth</p>
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="flex items-center gap-4 md:gap-6 p-5 md:p-6 bg-muted/30 dark:bg-zinc-800/50 rounded-2xl md:rounded-3xl border border-border/50 shadow-sm"
           >
-            <div
-              className="bg-card rounded-xl p-8 md:p-12 border border-border shadow-lg"
-              data-testid="team-stats-card"
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-zinc-900 rounded-xl md:rounded-2xl flex items-center justify-center shadow-sm shrink-0 border border-border/50">
+              <Users className="w-6 h-6 md:w-7 md:h-7 text-secondary" />
+            </div>
+            <div>
+              <h4 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight">7L+ Impacted</h4>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Students Trained</p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Expert Teaser Grid - Better Mobile Presentation */}
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 mb-16">
+          {topExperts.map((member, index) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="group relative bg-white dark:bg-zinc-900 rounded-2xl md:rounded-3xl overflow-hidden border border-border/50 shadow-sm hover:shadow-2xl hover:border-primary/30 transition-all duration-500"
             >
-              <h3
-                className="text-2xl md:text-3xl font-bold mb-8 text-center text-foreground"
-                data-testid="text-team-stats-title"
-              >
-                Proven <span className="text-primary">Partnership</span>{" "}
-                <span className="text-secondary">Success</span>
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div
-                  className="text-center"
-                  data-testid="stat-combined-experience"
-                >
-                  <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Calendar className="w-8 h-8 text-primary-foreground" />
-                  </div>
-                  <div className="text-3xl font-bold mb-2 text-foreground">
-                    25+
-                  </div>
-                  <div className="text-muted-foreground font-medium">
-                    Years Combined Experience
-                  </div>
-                </div>
-                <div
-                  className="text-center"
-                  data-testid="stat-students-impacted"
-                >
-                  <div className="w-16 h-16 bg-secondary rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Users className="w-8 h-8 text-secondary-foreground" />
-                  </div>
-                  <div className="text-3xl font-bold mb-2 text-foreground">
-                    200K+
-                  </div>
-                  <div className="text-muted-foreground font-medium">
-                    Students Trained via College Partnerships
+              <div className="aspect-[4/5] overflow-hidden relative">
+                <img 
+                  src={member.image} 
+                  alt={member.name} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 object-center" 
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(member.name) + "&background=0D8ABC&color=fff&size=512";
+                  }}
+                />
+                
+                {/* On mobile/tablet, show names directly. On desktop, hover. */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Fixed Experience Badge */}
+                <div className="absolute top-3 right-3 md:top-4 md:right-4 z-10">
+                  <div className="bg-white/95 dark:bg-zinc-800/95 backdrop-blur-sm px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg md:rounded-xl shadow-lg border border-border/50 flex items-center gap-1.5 md:gap-2">
+                    <Briefcase className="w-3 md:w-3.5 h-3 md:h-3.5 text-primary" />
+                    <span className="text-[9px] md:text-[10px] font-bold text-foreground uppercase tracking-wider leading-none">
+                      {member.experience.split(" ")[0]}Y+ Exp
+                    </span>
                   </div>
                 </div>
-                <div className="text-center" data-testid="stat-dedication">
-                  <div className="w-16 h-16 bg-accent rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Star className="w-8 h-8 text-accent-foreground" />
-                  </div>
-                  <div className="text-3xl font-bold mb-2 text-foreground">
-                    100%
-                  </div>
-                  <div className="text-muted-foreground font-medium">
-                    Institutional Partner Satisfaction
-                  </div>
+
+                <div className="absolute bottom-4 left-4 right-4 text-white md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300">
+                  <p className="text-[8px] md:text-[10px] font-bold text-primary uppercase tracking-wider mb-1">{member.role}</p>
+                  <h3 className="text-base md:text-xl font-extrabold uppercase tracking-tight leading-tight">{member.name}</h3>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Action Button */}
+        <div className="flex justify-center pt-8 md:pt-12 border-t border-border/50">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={navigateToTeamPage}
+            className="group flex items-center gap-3 md:gap-4 px-8 md:px-10 py-4 md:py-5 bg-primary text-white rounded-2xl font-bold text-sm md:text-base uppercase tracking-wider shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transition-all active:scale-95"
+          >
+            <span>Explore all mentors</span>
+            <ChevronRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+          </motion.button>
         </div>
       </div>
     </section>

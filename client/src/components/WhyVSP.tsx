@@ -1,181 +1,103 @@
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { motion } from "framer-motion";
 import { Presentation, FileText, Laptop, Star } from "lucide-react";
 
 export default function WhyVSP() {
-  const { elementRef: whyRef, isVisible: whyVisible } = useScrollAnimation();
-
   const features = [
     {
       icon: Presentation,
-      title: "Interactive Teaching",
+      title: "Interactive Learning",
       description:
-        "Our interactive teaching methodologies ensure high engagement and better learning outcomes for your students.",
-      color: "from-blue-500 to-blue-600",
+        "Our engaging teaching methods focus on active participation and hands-on practice to help students learn better.",
+      color: "blue",
     },
     {
       icon: FileText,
-      title: "Quality Materials",
+      title: "Well-Researched Content",
       description:
-        "Comprehensive training materials designed by experienced faculty specifically for institutional partnership programs.",
-      color: "from-green-500 to-green-600",
+        "Our training materials are carefully developed based on industry needs and current job market trends.",
+      color: "green",
     },
     {
       icon: Laptop,
-      title: "Online Testing",
+      title: "Online Assessments",
       description:
-        "Systematic online assessments that prepare your students for modern recruitment processes and boost placement success.",
-      color: "from-purple-500 to-purple-600",
+        "Easy-to-use online tests that help track student progress and prepare them for real job interviews.",
+      color: "purple",
     },
     {
       icon: Star,
-      title: "Comprehensive Sessions",
+      title: "Final Review",
       description:
-        "Intensive review sessions ensure your students achieve optimal performance in campus recruitment processes.",
-      color: "from-orange-500 to-orange-600",
-    },
-  ];
-
-  const processSteps = [
-    {
-      step: 1,
-      title: "Partnership Setup",
-      description: "Institutional needs assessment",
-      color: "bg-primary",
-    },
-    {
-      step: 2,
-      title: "Customized Training",
-      description: "Tailored curriculum delivery",
-      color: "bg-secondary",
-    },
-    {
-      step: 3,
-      title: "Progress Monitoring",
-      description: "Real-time performance tracking",
-      color: "bg-accent",
-    },
-    {
-      step: 4,
-      title: "Placement Success",
-      description: "Enhanced institutional outcomes",
-      color: "bg-green-600",
+        "Focused practice sessions that polish student skills right before the actual job interviews.",
+      color: "orange",
     },
   ];
 
   return (
     <section
       id="why-vsp"
-      className="py-20 bg-background relative"
-      ref={whyRef}
+      className="py-16 md:py-24 bg-white relative overflow-hidden"
       data-testid="section-why-vsp"
     >
-      <div className="section-divider pt-8"></div>
-      <div className="container mx-auto px-4 lg:px-6">
-        <div className="max-w-6xl mx-auto">
-          <div
-            className={`text-center mb-16 ${
-              whyVisible ? "animate-fade-in" : "opacity-0"
-            }`}
-          >
-            <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary"
-              data-testid="text-why-vsp-title"
-            >
-              Why Partner with VSP?
-            </h2>
-            <p
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
-              data-testid="text-why-vsp-subtitle"
-            >
-              Discover what makes VSP Technologies the preferred training
-              partner for educational institutions nationwide
-            </p>
-          </div>
+      {/* Decorative flair */}
+      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-primary/5 rounded-full blur-[100px] -z-0" />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className={`card-hover ${
-                  whyVisible ? "animate-fade-in" : "opacity-0"
-                }`}
-                style={{ animationDelay: `${(index + 1) * 0.1}s` }}
-                data-testid={`feature-card-${index + 1}`}
-              >
-                <div className="bg-card rounded-2xl p-6 shadow-lg text-center h-full">
-                  <div
-                    className={`w-16 h-16 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4`}
-                  >
-                    <feature.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3
-                    className="text-xl font-semibold mb-3 text-card-foreground"
-                    data-testid={`feature-title-${index + 1}`}
-                  >
-                    {feature.title}
-                  </h3>
-                  <p
-                    className="text-muted-foreground leading-relaxed"
-                    data-testid={`feature-description-${index + 1}`}
-                  >
-                    {feature.description}
-                  </p>
-                </div>
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          {/* Left Content Column */}
+          <div className="lg:col-span-4 lg:sticky lg:top-32 text-center lg:text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6 md:space-y-8"
+            >
+              <div className="inline-flex items-center space-x-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-[10px] md:text-xs font-bold uppercase tracking-wider border border-primary/20 mx-auto lg:mx-0">
+                <span>The VSP edge</span>
               </div>
-            ))}
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-4 tracking-tight leading-[1.1]">
+                Why Top <br className="hidden lg:block" />Institutions <br className="hidden lg:block" /><span className="text-primary italic font-serif">Trust Us</span>
+              </h2>
+              <p className="text-sm md:text-lg text-slate-500 leading-relaxed font-medium max-w-lg mx-auto lg:mx-0">
+                We combine years of academic excellence with real-world corporate insights 
+                to deliver results that matter.
+              </p>
+            </motion.div>
           </div>
 
-          {/* Process Steps */}
-          <div
-            className={`mt-20 ${whyVisible ? "animate-fade-in" : "opacity-0"}`}
-            style={{ animationDelay: "0.6s" }}
-          >
-            <h3
-              className="text-2xl font-bold text-center mb-12 text-foreground"
-              data-testid="text-training-process-title"
-            >
-              Our Institutional Partnership Process
-            </h3>
-            <div className="relative">
-              {/* Connecting lines */}
-              <div className="md:hidden absolute left-6 top-0 bottom-0 w-0.5 bg-border"></div>
-              <div className="hidden md:block absolute left-0 right-0 top-6 h-0.5 bg-border"></div>
-
-              <div
-                className="flex flex-col md:flex-row items-start md:items-center justify-between md:space-x-6 space-y-8 md:space-y-0"
-                data-testid="process-steps-container"
-              >
-                {processSteps.map((step, index) => (
-                  <div
+          {/* Right Cards Column */}
+          <div className="lg:col-span-8">
+            <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
+              {features.map((feature, index) => {
+                const colors: Record<string, string> = {
+                  blue: "bg-blue-50 text-blue-600 border-blue-100",
+                  green: "bg-emerald-50 text-emerald-600 border-emerald-100",
+                  purple: "bg-purple-50 text-purple-600 border-purple-100",
+                  orange: "bg-orange-50 text-orange-600 border-orange-100",
+                };
+                
+                return (
+                  <motion.div
                     key={index}
-                    className="relative flex md:flex-col items-start md:items-center md:text-center md:w-1/4"
-                    data-testid={`process-step-${step.step}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="group bg-slate-50 p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-slate-100 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:bg-white hover:border-primary/20"
                   >
-                    {/* Marker */}
-                    <div className="flex items-center md:flex-col">
-                      <div
-                        className={`relative z-10 w-10 h-10 md:w-12 md:h-12 ${step.color} rounded-full flex items-center justify-center text-white font-bold shadow-lg`}
-                      >
-                        {step.step}
-                      </div>
-                      <div className="ml-4 md:ml-0 md:mt-4">
-                        <div
-                          className="font-semibold text-foreground"
-                          data-testid={`process-step-title-${step.step}`}
-                        >
-                          {step.title}
-                        </div>
-                        <div
-                          className="text-muted-foreground text-sm"
-                          data-testid={`process-step-description-${step.step}`}
-                        >
-                          {step.description}
-                        </div>
-                      </div>
+                    <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 md:mb-8 border transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${colors[feature.color]}`}>
+                      <feature.icon className="w-7 h-7 md:w-8 md:h-8" />
                     </div>
-                  </div>
-                ))}
-              </div>
+                    <h3 className="text-xl md:text-2xl font-extrabold mb-3 md:mb-4 text-slate-900 leading-tight tracking-tight group-hover:text-primary transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-slate-500 leading-relaxed font-semibold">
+                      {feature.description}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>

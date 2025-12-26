@@ -1,40 +1,13 @@
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
-  Users,
-  Calendar,
-  Award,
   ArrowRight,
-  BookOpen,
-  Target,
-  ArrowDown,
+  TrendingUp,
+  Users,
+  Award,
+  CheckCircle2,
 } from "lucide-react";
 
 export default function Hero() {
-  const { elementRef: heroRef, isVisible: heroVisible } = useScrollAnimation();
-  const [currentStat, setCurrentStat] = useState(0);
-
-  const stats = [
-    {
-      number: "200K+",
-      label: "Students Trained Across Institutions",
-      icon: Users,
-    },
-    {
-      number: "17+",
-      label: "Years Serving Educational Partners",
-      icon: Calendar,
-    },
-    { number: "100%", label: "Partner Satisfaction Rate", icon: Award },
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStat((prev) => (prev + 1) % stats.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -42,214 +15,151 @@ export default function Hero() {
     }
   };
 
+  const partnerLogos = [
+    "/BAPATLA.jpg",
+    "/RAGHU.jpg",
+    "/VIGNAN'S.png",
+    "/TKR.png",
+    "/KVSubbareddy.png",
+    "/Rise.png",
+    "/Santhiram.jpg",
+    "/Vaageswari.jpg",
+    "/Ideal.jpg",
+    "/KLR.jpg",
+    "/Mother Theresa.jpg",
+    "/Srinivasa.jpg",
+    "/International-school.jpg",
+  ];
+
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center bg-background "
-      ref={heroRef}
-      data-testid="section-hero"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-x-hidden pt-20 pb-12 md:pt-36 md:pb-16 lg:pt-44 lg:pb-20 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40"
     >
-      {/* Full-section Background Image */}
-      <img
-        src="/Training.jpg"
-        alt="Training section background"
-        className="absolute inset-0 w-full h-full object-cover opacity-5"
-      />
-      {/* Professional Background Pattern */}
-      <div className="absolute inset-0">
-        {/* Subtle brand accent */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-secondary/3 to-transparent"></div>
-
-        {/* Professional grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern
-                id="professional-grid"
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
-              >
-                <path
-                  d="M 40 0 L 0 0 0 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                />
-              </pattern>
-            </defs>
-            <rect
-              width="100%"
-              height="100%"
-              fill="url(#professional-grid)"
-              className="text-foreground"
-            />
-          </svg>
-        </div>
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-64 md:w-80 h-64 md:h-80 bg-blue-400/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 -left-40 w-80 md:w-96 h-80 md:h-96 bg-indigo-400/15 rounded-full blur-3xl" />
+        
+        {/* Simplified Grid Pattern for Performance */}
+        <div className="absolute inset-0 opacity-[0.03] hero-pattern" />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 lg:px-6 max-w-7xl ">
-        <div className="grid lg:grid-cols-12 gap-12 items-center min-h-screen py-20">
-          {/* Main Content */}
-          <div className="lg:col-span-7 text-center lg:text-left">
-            <div className={`${heroVisible ? "animate-fade-in" : "opacity-0"}`}>
-              <div className="inline-flex items-center px-6 py-3 bg-primary/10 rounded-full text-primary text-xs md:text-sm font-semibold mb-6 border border-primary/20 mt-12 lg:mt-0">
-                <div className="w-2 h-2 bg-primary rounded-full mr-3 "></div>
-                Trusted by Leading Educational Institutions
-              </div>
-
-              <h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 leading-tight"
-                data-testid="text-hero-title"
-              >
-                {/* <span className="text-primary text-xl ">We </span> */}
-                Prepare Students for
-                <span className="block text-primary mt-2">
-                  Successful Careers
-                </span>
-              </h1>
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Content - Text Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col space-y-6 md:space-y-8 text-center lg:text-left w-full max-w-full overflow-hidden"
+          >
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/90 backdrop-blur-md rounded-full border border-blue-100 text-[#1a7bc1] text-[10px] md:text-xs font-bold uppercase tracking-wider mx-auto lg:mx-0 shadow-sm w-fit">
+              <span className="w-2 h-2 bg-[#f59e0b] rounded-full animate-pulse" />
+              <span>Campus Recruitment Experts</span>
             </div>
 
-            <div
-              className={`${
-                heroVisible ? "animate-fade-in" : "opacity-0"
-              } delay-200`}
-            >
-              <p
-                className="text-base md:text-lg text-muted-foreground mb-10 max-w-2xl lg:max-w-none leading-relaxed"
-                data-testid="text-hero-description"
-              >
-                Partner with VSP Technologies to deliver comprehensive campus
-                recruitment training that transforms your students into
-                industry-ready professionals. Our proven programs ensure higher
-                placement rates and better career outcomes for your graduates.
+            {/* Main Heading */}
+            <div className="space-y-4 md:space-y-6">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111827] leading-[1.2] lg:leading-[1.1] tracking-tight">
+                Bridging the Gap <br className="hidden sm:block" />
+                Between{" "}
+                <span className="text-primary italic font-serif">
+                  Education
+                </span>{" "}
+                <br className="hidden sm:block" />
+                and <span className="text-[#f59e0b]">Careers</span>
+              </h1>
+              <p className="text-sm sm:text-base md:text-xl text-slate-500 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed px-2 md:px-0">
+                Empowering institutions with industry-aligned training programs
+                that transform students into high-performing professionals.
               </p>
             </div>
 
-            <div
-              className={`${
-                heroVisible ? "animate-fade-in" : "opacity-0"
-              } delay-400 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center`}
-            >
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 px-4 sm:px-0 lg:mx-0 justify-center lg:justify-start">
               <button
-                onClick={() => scrollToSection("about")}
-                className="group bg-primary text-primary-foreground px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 flex items-center"
-                data-testid="button-learn-more"
+                onClick={() => scrollToSection("crt-services")}
+                className="bg-primary text-white px-8 py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3"
               >
-                <BookOpen className="w-5 h-5 mr-2 group-hover:translate-x-0.5 transition-transform duration-300" />
-                Partner With Us
+                Explore Programs
+                <ArrowRight className="w-5 h-5" />
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="group border-2 border-primary text-primary px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center"
-                data-testid="button-get-started"
+                className="bg-white text-slate-700 px-8 py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg border border-slate-200 transition-all hover:border-primary/50 hover:text-primary active:scale-95"
               >
-                <Target className="w-5 h-5 mr-2 group-hover:translate-x-0.5 transition-transform duration-300" />
-                View Our Services
+                Partner With Us
               </button>
             </div>
-          </div>
 
-          {/* Professional Stats Panel */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div
-              className={`${
-                heroVisible ? "animate-slide-in-right" : "opacity-0"
-              } delay-600 w-full max-w-md`}
-            >
-              {/* VSP Logo Display
-              <div className="bg-card rounded-2xl p-8 shadow-lg border border-border mb-6">
-                <div className="text-center">
-                  <img
-                    src="@assets/download_1757855394752.png"
-                    alt="VSP Technologies Logo"
-                    className="h-20 w-auto mx-auto mb-6"
-                  />
-                  <h3 className="text-xl font-bold text-foreground mb-2">
-                    Campus Recruitment Training
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Your Trusted Educational Partner
-                  </p>
+            {/* Partner Logos Slider */}
+            <div className="pt-8 md:pt-10 border-t border-slate-200/50 mt-4 md:mt-0 w-full max-w-[calc(100vw-32px)] sm:max-w-full">
+              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">
+                Trusted by 500+ Institutions
+              </p>
+              <div className="relative overflow-hidden w-full group">
+                <div className="flex items-center gap-8 md:gap-12 animate-scroll whitespace-nowrap py-2 w-max">
+                  {[...partnerLogos, ...partnerLogos].map((src, i) => (
+                    <img
+                      key={i}
+                      src={src}
+                      className="h-6 sm:h-8 md:h-10 w-auto grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all flex-shrink-0"
+                      alt="Partner"
+                    />
+                  ))}
                 </div>
-              </div> */}
+                {/* Gradient Fades for Slider */}
+                <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+                <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-slate-50 to-transparent z-10" />
+              </div>
+            </div>
+          </motion.div>
 
-              {/* Current Stat Display */}
-              <div className="relative overflow-hidden bg-card rounded-2xl p-8 shadow-lg border border-border py-20">
-                {/* Blurred background image */}
-                <img
-                  src="/Training.jpg"
-                  alt="Training background"
-                  className="absolute inset-0 w-full h-full object-cover scale-110 opacity-30 pointer-events-none "
-                />
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mx-auto mb-6 transition-all duration-500">
-                    {(() => {
-                      const IconComponent = stats[currentStat].icon;
-                      return (
-                        <IconComponent className="w-8 h-8 text-primary-foreground" />
-                      );
-                    })()}
-                  </div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2 transition-all duration-500">
-                    {stats[currentStat].number}
-                  </div>
-                  <div className="text-muted-foreground font-medium text-base md:text-lg mb-6">
-                    {stats[currentStat].label}
-                  </div>
+          {/* Right Visual - Image Section */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative lg:mt-0 px-2 sm:px-8 lg:px-0"
+          >
+            <div className="relative max-w-md mx-auto lg:max-w-none">
+              {/* Decorative shapes */}
+              <div className="absolute -inset-4 bg-primary/5 rounded-[2.5rem] md:rounded-[4rem] blur-2xl" />
 
-                  {/* Progress Indicators */}
-                  <div className="flex justify-center space-x-2">
-                    {stats.map((_, index) => (
-                      <div
-                        key={index}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
-                          index === currentStat
-                            ? "w-8 bg-primary"
-                            : "w-1.5 bg-border"
-                        }`}
-                      ></div>
-                    ))}
-                  </div>
-                </div>
+              {/* Legacy Badge */}
+              <div className="absolute -top-4 -right-4 z-20 bg-white rounded-2xl p-3 md:p-5 shadow-xl border border-slate-50 flex flex-col items-center animate-subtle-float">
+                <span className="text-2xl md:text-4xl font-extrabold text-primary leading-none">17+</span>
+                <span className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tighter text-center">Years Legacy</span>
               </div>
 
-              {/* Achievement Badges */}
-              <div className="grid grid-cols-3 gap-4 mt-6">
-                <div className="bg-secondary/10 rounded-xl p-4 text-center border border-secondary/20">
-                  <Award className="w-6 h-6 text-secondary mx-auto mb-2" />
-                  <div className="text-sm font-semibold text-foreground">
-                    Excellence
-                  </div>
+              {/* Image Container */}
+              <div className="relative bg-white rounded-[2rem] md:rounded-[3.5rem] p-2 md:p-3 shadow-2xl border border-white/50 overflow-hidden group">
+                <div className="aspect-square sm:aspect-[4/3] lg:aspect-square rounded-[1.8rem] md:rounded-[3rem] overflow-hidden">
+                  <img
+                    src="/hero-ultra-realistic.png"
+                    alt="VSP Technologies Training"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
-                <div className="bg-accent/10 rounded-xl p-4 text-center border border-accent/20">
-                  <Users className="w-6 h-6 text-accent mx-auto mb-2" />
-                  <div className="text-sm font-semibold text-foreground">
-                    Community
-                  </div>
-                </div>
-                <div className="bg-primary/10 rounded-xl p-4 text-center border border-primary/20">
-                  <Target className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <div className="text-sm font-semibold text-foreground">
-                    Results
+
+                {/* Success Card */}
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-8 sm:left-8 sm:right-auto">
+                  <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 md:p-5 shadow-xl border border-white flex items-center gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center text-white shrink-0">
+                      <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />
+                    </div>
+                    <div>
+                      <div className="text-lg md:text-2xl font-extrabold text-slate-900 leading-none">200K+</div>
+                      <div className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Placements</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
-
-      {/* Professional Scroll Indicator */}
-      <div className="absolute bottom-0 lg:bottom-6 left-1/2 transform -translate-x-1/2 ">
-        {/* <div className="w-6 h-10 border-2 border-primary/30 rounded-full flex justify-center animate-bounce">
-          <div className="w-1 h-3 bg-primary rounded-full mt-2"></div>
-        </div> */}
-        <ArrowDown className="w-6 h-6 text-primary mx-auto mb-2" />
-        <p className="text-muted-foreground text-xs mt-2 font-medium text-center">
-          Scroll to Explore
-        </p>
       </div>
     </section>
   );

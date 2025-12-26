@@ -1,343 +1,108 @@
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState, useEffect } from "react";
-import {
-  Building,
-  Eye,
-  Users,
-  Calendar,
-  Star,
-  ChevronRight,
-  ArrowRight,
-  Lightbulb,
-  MessageCircle,
-  Code,
-  GraduationCap,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { CheckCircle2, Award, Users, Rocket } from "lucide-react";
 
 export default function About() {
-  const { elementRef: aboutRef, isVisible: aboutVisible } =
-    useScrollAnimation();
-  const [activeFeature, setActiveFeature] = useState(0);
-
-  const features = [
-    {
-      icon: Lightbulb,
-      title: "Aptitude Excellence",
-      description: "Sharpen analytical thinking with world-class methodologies",
-      color: "primary",
-      bgColor: "bg-primary/10",
-    },
-    {
-      icon: MessageCircle,
-      title: "Communication Mastery",
-      description: "Transform communication skills and personality development",
-      color: "secondary",
-      bgColor: "bg-secondary/10",
-    },
-    {
-      icon: Code,
-      title: "Technical Training",
-      description: "Master cutting-edge technical skills for modern careers",
-      color: "accent",
-      bgColor: "bg-accent/10",
-    },
-    {
-      icon: GraduationCap,
-      title: "Career Development",
-      description: "Comprehensive guidance for professional success",
-      color: "primary",
-      bgColor: "bg-primary/10",
-    },
+  const stats = [
+    { label: "Success Rate", value: "100%", icon: CheckCircle2, color: "text-green-500" },
+    { label: "Expert Mentors", value: "50+", icon: Users, color: "text-blue-500" },
+    { label: "Years of Excellence", value: "17+", icon: Award, color: "text-amber-500" },
+    { label: "Top Corporate Ties", value: "200+", icon: Rocket, color: "text-purple-500" },
   ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % features.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <section
       id="about"
-      className="py-20 bg-muted/30 relative"
-      ref={aboutRef}
+      className="py-16 md:py-24 bg-background relative overflow-hidden"
       data-testid="section-about"
     >
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="about-grid"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 40 0 L 0 0 0 40"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-              />
-            </pattern>
-          </defs>
-          <rect
-            width="100%"
-            height="100%"
-            fill="url(#about-grid)"
-            className="text-foreground"
-          />
-        </svg>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 lg:px-6">
-        <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
-          <div
-            className={`text-center mb-16 ${
-              aboutVisible ? "animate-fade-in" : "opacity-0"
-            }`}
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-0 translate-x-1/2 -translate-y-1/2" />
+      
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          {/* Left Side: Imagery */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="order-2 lg:order-1"
           >
-            <div className="inline-flex items-center px-6 py-3 bg-primary/10 rounded-full text-primary font-semibold mb-6 border border-primary/20">
-              <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
-              Trusted Institutional Partner
-            </div>
-            <h2
-              className="text-4xl md:text-5xl font-bold mb-8 text-foreground"
-              data-testid="text-about-title"
-            >
-              Your Partner in <span className="text-primary">Student</span>{" "}
-              <span className="text-secondary">Success</span>
-            </h2>
-            <p
-              className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-              data-testid="text-about-subtitle"
-            >
-              From Visakhapatnam to nationwide partnerships - discover how VSP
-              Technologies became India's preferred campus recruitment training
-              provider for educational institutions
-            </p>
-          </div>
+            <div className="relative">
+              {/* Main Image */}
+              <div className="relative rounded-[2rem] md:rounded-[3.5rem] overflow-hidden shadow-2xl border-4 md:border-8 border-white aspect-[4/3] z-10 group">
+                <img
+                  src="/Training.jpg"
+                  alt="VSP Technologies Training Session"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+              </div>
 
-          {/* Main Content - Clean Professional Layout */}
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
-            {/* Left Side - Story Content */}
-            <div className="lg:col-span-7">
-              <div
-                className={`${
-                  aboutVisible ? "animate-slide-in-left" : "opacity-0"
-                } space-y-8`}
-              >
-                {/* Company Story */}
-                <div className="bg-card rounded-xl p-8 shadow-sm border border-border">
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mr-4">
-                      <Building className="w-6 h-6 text-primary-foreground " />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-primary">
-                        Our Foundation
-                      </h3>
-                      <p className="text-muted-foreground">
-                        Rooted in Excellence
-                      </p>
-                    </div>
-                  </div>
-                  <p
-                    className="text-base leading-relaxed text-muted-foreground"
-                    data-testid="text-about-description-1"
-                  >
-                    VSP Technologies, headquartered in Visakhapatnam in India,
-                    is one of the fastest growing educational service providers
-                    in India. We specialize in "CAMPUS RECRUITMENT TRAINING
-                    PARTNERSHIPS" with educational institutions. VSP delivers
-                    comprehensive training programs through seminars, workshops
-                    and career guidance sessions that have been carefully
-                    designed to enhance your institution's placement success
-                    rates through comprehensive research by our expert team.
-                  </p>
+              {/* Stats Badge - Overlapping */}
+              <div className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 z-20 bg-white rounded-3xl p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-50 hidden sm:flex flex-col items-center animate-subtle-float">
+                <div className="text-4xl md:text-5xl font-extrabold text-primary mb-1 md:mb-2">17+</div>
+                <div className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest text-center">
+                  Years of <br /> Excellence
                 </div>
+              </div>
 
-                {/* Vision Statement */}
-                <div className="bg-card rounded-xl p-8 shadow-sm border border-border">
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center mr-4">
-                      <Eye className="w-6 h-6 text-secondary-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-secondary">
-                        Our Vision
-                      </h3>
-                      <p className="text-muted-foreground">
-                        Complete Transformation
-                      </p>
-                    </div>
-                  </div>
-                  <p
-                    className="text-base leading-relaxed text-muted-foreground mb-4"
-                    data-testid="text-about-description-2"
-                  >
-                    VSP is a training service provider established with a vision
-                    to partner with educational institutions in providing
-                    complete personality development programs for students,
-                    preparing them to excel in campus recruitment processes and
-                    secure better career opportunities.
-                  </p>
-                  <p
-                    className="text-base leading-relaxed text-muted-foreground"
-                    data-testid="text-about-description-3"
-                  >
-                    Our institutional partnerships focus on Aptitude training,
-                    English proficiency, Soft Skills (Communication Skills &
-                    Personality Development) and Technical Training - ensuring
-                    your students gain the competitive edge needed for
-                    successful placements.
-                  </p>
+              {/* Floating Element 2 */}
+              <div className="absolute -top-6 -left-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white flex items-center gap-3 animate-subtle-float delay-700">
+                <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center text-white">
+                  <CheckCircle2 className="w-6 h-6" />
                 </div>
-
-                {/* Professional Stats Panel */}
-                {/* <div className="bg-primary rounded-xl p-8 text-primary-foreground">
-                  <div className="grid grid-cols-3 gap-8">
-                    <div className="text-center" data-testid="stat-students">
-                      <div className="w-16 h-16 bg-primary-foreground/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <Users className="w-8 h-8 text-primary-foreground" />
-                      </div>
-                      <div className="text-3xl font-bold mb-2">200K+</div>
-                      <div className="text-primary-foreground/90 font-medium text-sm">
-                        Students Trained via Institutional Partnerships
-                      </div>
-                    </div>
-                    <div className="text-center" data-testid="stat-experience">
-                      <div className="w-16 h-16 bg-primary-foreground/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <Calendar className="w-8 h-8 text-primary-foreground" />
-                      </div>
-                      <div className="text-3xl font-bold mb-2">17+</div>
-                      <div className="text-primary-foreground/90 font-medium text-sm">
-                        Years Serving Educational Partners
-                      </div>
-                    </div>
-                    <div className="text-center" data-testid="stat-commitment">
-                      <div className="w-16 h-16 bg-primary-foreground/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <Star className="w-8 h-8 text-primary-foreground" />
-                      </div>
-                      <div className="text-3xl font-bold mb-2">100%</div>
-                      <div className="text-primary-foreground/90 font-medium text-sm">
-                        Partner Satisfaction
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
+                <div className="font-bold text-slate-800 text-sm">100% Success Rate</div>
               </div>
             </div>
+          </motion.div>
 
-            {/* Right Side - Professional Features */}
-            <div className="lg:col-span-5">
-              <div
-                className={`${
-                  aboutVisible ? "animate-slide-in-right" : "opacity-0"
-                } space-y-8`}
-              >
-                {/* Professional Image */}
-                <div className="relative overflow-hidden rounded-xl shadow-sm border border-border bg-gradient-to-t from-black to-primary  ">
-                  <img
-                    // src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
-                    src="/Training2.jpg"
-                    alt="Students collaborating in modern learning environment"
-                    className="w-full h-64 object-cover opacity-60"
-                    data-testid="img-about-students"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-background/95 p-4 ">
-                    <p className="text-gray-100 font-semibold text-sm">
-                      🎯 Mission: Excellence in Education
-                    </p>
-                    <p className="text-gray-200 text-xs mt-1">
-                      Transforming potential into professional success
-                    </p>
-                  </div>
-                </div>
-
-                {/* Training Features */}
-                <div className="space-y-4">
-                  <h3 className="text-xl font-bold text-foreground mb-6  text-center">
-                    {/* <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center mr-3">
-                      <Star className="w-4 h-4 text-accent-foreground" />
-                    </div> */}
-                    Our Core Strengths
-                  </h3>
-                  {features.map((feature, index) => {
-                    const IconComponent = feature.icon;
-                    return (
-                      <div
-                        key={index}
-                        className={`group cursor-pointer transition-all duration-300 ${
-                          activeFeature === index
-                            ? "bg-card shadow-md border-primary/20"
-                            : "bg-card/50 hover:bg-card"
-                        } rounded-xl p-4 border border-border`}
-                        onClick={() => setActiveFeature(index)}
-                      >
-                        <div className="flex items-center space-x-4">
-                          <div
-                            className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 ${
-                              feature.color === "primary"
-                                ? "bg-primary text-primary-foreground"
-                                : feature.color === "secondary"
-                                ? "bg-secondary text-secondary-foreground"
-                                : "bg-accent text-accent-foreground"
-                            }`}
-                          >
-                            <IconComponent className="w-5 h-5" />
-                          </div>
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-foreground transition-colors duration-300">
-                              {feature.title}
-                            </h4>
-                            <p
-                              className={`text-muted-foreground text-sm transition-all duration-300 ${
-                                activeFeature === index
-                                  ? "opacity-100 mt-1"
-                                  : "opacity-70"
-                              }`}
-                            >
-                              {feature.description}
-                            </p>
-                          </div>
-                          <div
-                            className={`transition-all duration-300 ${
-                              activeFeature === index
-                                ? "rotate-90 text-primary"
-                                : "text-muted-foreground"
-                            }`}
-                          >
-                            <ChevronRight className="w-4 h-4" />
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Professional Call to Action */}
-                {/* <div className="bg-secondary/10 rounded-xl p-6 text-center border border-secondary/20">
-                  <h4 className="text-lg font-bold mb-2 text-foreground">
-                    Ready to Enhance Your Institution's Placement Rate?
-                  </h4>
-                  <p className="text-muted-foreground mb-4 text-sm">
-                    Join leading educational institutions who trust VSP
-                    Technologies for campus recruitment training
-                  </p>
-                  <button
-                    className="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-all duration-300 flex items-center mx-auto"
-                    data-testid="button-explore-programs"
-                  >
-                    <ArrowRight className="w-4 h-4 mr-2" />
-                    Partner With Us
-                  </button>
-                </div> */}
+          {/* Right Side: Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="order-1 lg:order-2 space-y-8"
+          >
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/10 rounded-full text-primary text-xs font-bold uppercase tracking-wider">
+                <Award className="w-4 h-4" />
+                <span>About our company</span>
               </div>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-[#111827] leading-tight">
+                Trusted by Experts, <br />
+                <span className="text-primary italic font-serif">Preferred</span> by Students
+              </h2>
+              <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
+                VSP Technologies is a leading training organization committed to bridging the corporate-academic divide. With over 17 years of legacy, we have empowered lakhs of students across South India.
+              </p>
             </div>
-          </div>
+
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
+              {stats.map((item, index) => (
+                <div key={index} className="bg-slate-50/80 rounded-2xl p-4 md:p-6 border border-slate-100/50 hover:bg-white hover:shadow-xl hover:border-primary/20 transition-all group">
+                  <div className={`${item.color} mb-3 group-hover:scale-110 transition-transform`}>
+                    <item.icon className="w-6 h-6 md:w-8 md:h-8" />
+                  </div>
+                  <div className="text-xl md:text-2xl font-extrabold text-slate-900">{item.value}</div>
+                  <div className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">{item.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* <div className="pt-4">
+              <div className="flex items-center gap-4 p-4 md:p-6 bg-slate-900 rounded-[2rem] text-white">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/20 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Users className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                </div>
+                <div>
+                  <div className="text-lg md:text-xl font-bold">200K+ Students Trained</div>
+                  <div className="text-xs md:text-sm text-slate-400">Across South India (AP, Telangana, Karnataka)</div>
+                </div>
+              </div>
+            </div> */}
+          </motion.div>
         </div>
       </div>
     </section>
