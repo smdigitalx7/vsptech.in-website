@@ -81,7 +81,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 pt-2 px-4 sm:px-0 lg:mx-0 justify-center lg:justify-start">
               <button
                 onClick={() => scrollToSection("crt-services")}
-                className="bg-primary text-white px-8 py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3"
+                className="bg-gradient-to-r from-primary to-accent text-white px-8 py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3"
               >
                 Explore Programs
                 <ArrowRight className="w-5 h-5" />

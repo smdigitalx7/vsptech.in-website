@@ -386,8 +386,9 @@ export default function Contact() {
 
                   <Button
                     type="submit"
+                    variant="premium"
                     disabled={contactMutation.isPending}
-                    className="w-full bg-primary text-white rounded-xl py-7 md:py-8 font-extrabold text-base md:text-lg hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 active:scale-95"
+                    className="w-full rounded-xl py-7 md:py-8 font-extrabold text-base md:text-lg"
                   >
                     {contactMutation.isPending ? (
                       <Loader className="w-6 h-6 animate-spin" />

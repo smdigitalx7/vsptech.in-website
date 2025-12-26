@@ -184,6 +184,20 @@ export const allTeamMembers = [
     bgColor: "primary",
     trainerType: "Technical",
   },
+  {
+    name: "Mr. Anil",
+    role: "Senior Aptitude Trainer",
+    experience: "6+ Years Experience",
+    studentsTrained: "50,000+ Students Trained",
+    image: "/Anil.jpeg",
+    description: [
+      "Mr. Anil is a seasoned Aptitude Trainer with over 6 years of experience in empowering students for competitive exams and campus recruitments. He specializes in simplifying complex mathematical concepts and logical reasoning problems, making them accessible to students of all backgrounds.",
+      "His unique teaching methodologies, including Vedic Maths shortcuts and time-management strategies, have helped thousands of students clear high-stakes assessments with confidence. He is dedicated to building students' cognitive speed and accuracy, essential for modern corporate entrance exams.",
+    ],
+    skills: ["Quantitative Aptitude", "Logical Reasoning", "Data Interpretation", "Vedic Maths", "Problem Solving"],
+    bgColor: "secondary",
+    trainerType: "Aptitude",
+  },
 ];
 
 

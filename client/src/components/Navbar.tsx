@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import { useActiveSection } from "@/hooks/useScrollAnimation";
 import { useLocation } from "wouter";
 import { Menu, X, ChevronRight, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,45 +17,30 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      // Faster feedback on scroll
-      setIsScrolled(scrollPosition > 20);
+      setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location]);
 
-  // Close mobile menu when clicking outside or on escape key
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
       const mobileMenu = document.querySelector('[data-testid="navbar-mobile-menu"]');
       const mobileMenuButton = document.querySelector('[data-testid="button-mobile-menu"]');
-      
-      if (
-        isMobileMenuOpen &&
-        mobileMenu &&
-        !mobileMenu.contains(target) &&
-        !mobileMenuButton?.contains(target)
-      ) {
+      if (isMobileMenuOpen && mobileMenu && !mobileMenu.contains(target) && !mobileMenuButton?.contains(target)) {
         setIsMobileMenuOpen(false);
       }
     };
-
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-      }
+      if (event.key === "Escape" && isMobileMenuOpen) setIsMobileMenuOpen(false);
     };
-
     if (isMobileMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden"; // Prevent body scroll when menu is open
+      document.body.style.overflow = "hidden";
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscape);
@@ -57,39 +48,24 @@ export default function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   const scrollToSection = (sectionId: string) => {
-    // Handle team page routing
     if (sectionId === "team") {
-      if (location !== "/team") {
-        setLocation("/team");
-      }
+      if (location !== "/team") setLocation("/team");
       closeMobileMenu();
       return;
     }
-
-    // Handle home page sections
     if (location !== "/") {
       setLocation("/");
-      // Wait for navigation then scroll
       setTimeout(() => {
         const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
     } else {
       const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     closeMobileMenu();
   };
@@ -99,22 +75,36 @@ export default function Navbar() {
     closeMobileMenu();
   };
 
-  const navItems = [
+  interface NavItem {
+    id: string;
+    label: string;
+    isExternal?: boolean;
+    url?: string;
+    customIcon?: string;
+  }
+
+  const navItems: NavItem[] = [
     { id: "home", label: "Home" },
     { id: "about", label: "About Us" },
-    // { id: "mission-vision", label: "Mission & Vision" },
-    // { id: "why-vsp", label: "The VSP Edge" },
     { id: "achievements", label: "Achievements" },
     { id: "colleges", label: "Partner Colleges" },
     { id: "gallery", label: "Gallery" },
     { id: "team", label: "Our Experts" },
     { id: "crt-services", label: "Programs" },
-    { id: "testverse", label: "Testverse", isExternal: true, url: "https://testverse.vsptech.in" },
   ];
 
+  const testverseItem: NavItem = { 
+    id: "testverse", 
+    label: "Testverse", 
+    isExternal: true, 
+    url: "https://testverse.vsptech.in", 
+    customIcon: "/testverse_logo_icon.png" 
+  };
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 transition-all duration-500 ${
+    <TooltipProvider delayDuration={0}>
+      <nav
+        className={`fixed top-0 left-0 right-0 transition-all duration-500 ${
         isScrolled
           ? "bg-white/80 backdrop-blur-xl border-b border-slate-200/40 shadow-sm z-[100]"
           : "bg-transparent z-[50]"
@@ -150,24 +140,17 @@ export default function Navbar() {
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => item.isExternal ? handleExternalLink(item.url!) : scrollToSection(item.id)}
-                className={`relative px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 group/nav flex items-center gap-2 ${
+                onClick={() => scrollToSection(item.id)}
+                className={`relative px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300 group/nav flex items-center gap-2 ${
                   isScrolled ? "text-slate-700" : "text-slate-600"
                 } ${
-                  item.id === 'testverse'
-                    ? "text-blue-500 hover:bg-primary/5"
-                    : activeSection === item.id
-                      ? "text-primary"
-                      : "hover:text-primary hover:bg-slate-50"
+                  activeSection === item.id
+                    ? "text-primary"
+                    : "hover:text-primary hover:bg-slate-50"
                 }`}
                 data-testid={`nav-link-${item.id}`}
               >
-                <span className="flex items-center gap-1.5">
-                  {item.label}
-                  {item.isExternal && (
-                    <ArrowUpRight className="pt-0.5 w-4 h-4 opacity-40 group-hover/nav:opacity-100 transition-opacity" />
-                  )}
-                </span>
+                {item.label}
                 {activeSection === item.id && (
                   <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></span>
                 )}
@@ -175,11 +158,43 @@ export default function Navbar() {
             ))}
             <button
               onClick={() => scrollToSection("contact")}
-              className="ml-4 px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 bg-gradient-to-r from-primary to-prim text-white"
+              className="ml-4 px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 bg-gradient-to-r from-primary to-accent text-white"
               data-testid="nav-link-contact"
             >
-              Contact
+              Contact Us
             </button>
+
+            {/* Testverse Portal Icon - Placed after Contact */}
+            <div className="pl-6">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleExternalLink(testverseItem.url!)}
+                    className="w-12 h-12 rounded-full bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/50 hover:shadow-xl hover:ring-blue-400/30 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group/testverse"
+                    aria-label="Testverse Portal"
+                  >
+                    <img 
+                      src={testverseItem.customIcon} 
+                      alt="" 
+                      className="w-7 h-7 object-contain transition-transform duration-500 group-hover/testverse:scale-110 drop-shadow-[0_2px_10px_rgba(37,99,235,0.1)]"
+                    />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" sideOffset={15} className="bg-white text-slate-800 border border-slate-200 p-4 shadow-xl rounded-xl w-56 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="flex flex-col gap-1.5">
+                    {/* <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">Secure Access</span> */}
+                    <h4 className="text-sm font-bold tracking-tight">VSP Testverse Portal</h4>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      Enter the official assessment portal for corporate and technical testing.
+                    </p>
+                    <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-blue-600">
+                       <span className="text-[9px] font-bold">LAUNCH NOW</span>
+                       <ArrowUpRight className="w-3 h-3" />
+                    </div>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -234,13 +249,13 @@ export default function Navbar() {
 
         {/* Mobile Menu Items - Professional Sequential List */}
         <div className="flex-1 overflow-y-auto py-8 px-4 space-y-1 custom-scrollbar">
-          {navItems.map((item, idx) => (
+          {[...navItems, testverseItem].map((item, idx) => (
             <button
               key={item.id}
               onClick={() => item.isExternal ? handleExternalLink(item.url!) : scrollToSection(item.id)}
               className={`w-full text-left px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 flex items-center gap-4 relative group ${
                 item.id === 'testverse'
-                  ? "text-primary bg-primary/5"
+                  ? "text-blue-600 bg-blue-50 border-l-4 border-l-blue-600 border-r-4 border-r-transparent"
                   : activeSection === item.id
                     ? "text-primary bg-primary/5"
                     : "text-slate-600 hover:text-primary hover:bg-slate-50"
@@ -252,14 +267,17 @@ export default function Navbar() {
                 <span className={`text-[10px] font-mono ${activeSection === item.id ? "text-primary" : "text-slate-300 group-hover:text-primary/40"}`}>
                   0{idx + 1}
                 </span>
-                <div className="flex items-center justify-between w-full">
-                  <span>{item.label}</span>
-                  {item.isExternal ? (
-                    <ExternalLink className="w-4 h-4 text-slate-300" />
-                  ) : (
-                    <ChevronRight className={`w-4 h-4 transition-transform ${activeSection === item.id ? "text-primary translate-x-1" : "text-slate-200"}`} />
-                  )}
-                </div>
+                  <div className="flex items-center justify-between w-full">
+                    <span className="flex items-center gap-2.5">
+                       {item.customIcon && <img src={item.customIcon} alt="" className="w-5 h-5 object-contain" />}
+                       {item.label}
+                    </span>
+                    {item.isExternal ? (
+                      <ExternalLink className="w-4 h-4 text-slate-300" />
+                    ) : (
+                      <ChevronRight className={`w-4 h-4 transition-transform ${activeSection === item.id ? "text-primary translate-x-1" : "text-slate-200"}`} />
+                    )}
+                  </div>
               </div>
               
               {/* Active Indicator Bar */}
@@ -282,5 +300,6 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </TooltipProvider>
   );
 }
