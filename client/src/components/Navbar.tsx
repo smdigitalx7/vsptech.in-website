@@ -203,16 +203,12 @@ export default function Navbar() {
               isScrolled
                 ? "text-slate-700 hover:bg-slate-100"
                 : "text-slate-800 hover:bg-white/30 backdrop-blur-sm "
-            } ${isMobileMenuOpen ? "text-primary bg-slate-100 shadow-inner" : ""}`}
+            } ${isMobileMenuOpen ? "opacity-0 pointer-events-none" : ""}`}
             onClick={toggleMobileMenu}
             data-testid="button-mobile-menu"
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </div>
@@ -227,13 +223,13 @@ export default function Navbar() {
       )}
 
       <div
-        className={`fixed top-0 right-0 h-screen w-[280px] sm:w-80 max-w-[85vw] bg-white lg:hidden z-[105] transform transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) shadow-2xl flex flex-col ${
+        className={`fixed top-0 right-0 h-[100dvh] w-[280px] sm:w-80 max-w-[85vw] bg-white lg:hidden z-[105] transform transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) shadow-2xl flex flex-col ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
         data-testid="navbar-mobile-menu"
       >
         {/* Mobile Menu Header */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-50 mt-2">
+        <div className="flex items-center justify-between p-6 border-b border-slate-50">
           <img
             src="/VSP_Logo.png"
             alt="VSP Technologies Logo"
@@ -242,18 +238,19 @@ export default function Navbar() {
           <button
             onClick={closeMobileMenu}
             className="p-2.5 rounded-full bg-slate-50 text-slate-400 hover:text-primary transition-all active:scale-95"
+            aria-label="Close menu"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Mobile Menu Items - Professional Sequential List */}
-        <div className="flex-1 overflow-y-auto py-8 px-4 space-y-1 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto py-4 px-4 space-y-1 custom-scrollbar">
           {[...navItems, testverseItem].map((item, idx) => (
             <button
               key={item.id}
               onClick={() => item.isExternal ? handleExternalLink(item.url!) : scrollToSection(item.id)}
-              className={`w-full text-left px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 flex items-center gap-4 relative group ${
+              className={`w-full text-left px-6 py-2.5 rounded-xl text-base font-semibold transition-all duration-300 flex items-center gap-4 relative group ${
                 item.id === 'testverse'
                   ? "text-blue-600 bg-blue-50 border-l-4 border-l-blue-600 border-r-4 border-r-transparent"
                   : activeSection === item.id
@@ -289,7 +286,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Contact Button - Premium Action */}
-        <div className="p-8 pb-12">
+        <div className="p-6 pb-10">
           <button
             onClick={() => scrollToSection("contact")}
             className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-sm tracking-widest uppercase shadow-lg shadow-slate-200 active:scale-95 transition-all text-center flex items-center justify-center gap-3"
