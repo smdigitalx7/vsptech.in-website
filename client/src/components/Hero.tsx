@@ -63,12 +63,12 @@ export default function Hero() {
             {/* Main Heading */}
             <div className="space-y-4 md:space-y-6">
               <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111827] leading-[1.2] lg:leading-[1.1] tracking-tight">
-                Bridging the Gap <br className="hidden sm:block" />
-                Between{" "}
+                Bridging the  <br className="hidden sm:block" />
+               Gap Between{" "}
                 <span className="text-primary italic font-serif">
                   Education
                 </span>{" "}
-                <br className="hidden sm:block" />
+                <br className="hidden  sm:block" />
                 and <span className="text-[#f59e0b]">Careers</span>
               </h1>
               <p className="text-sm sm:text-base md:text-xl text-slate-500 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed px-2 md:px-0">
