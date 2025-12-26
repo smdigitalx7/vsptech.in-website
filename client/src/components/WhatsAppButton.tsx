@@ -1,12 +1,35 @@
 import { useState, useEffect } from "react";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
 export default function WhatsAppButton() {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [scrollMode, setScrollMode] = useState<"to-bottom" | "to-top" | "hidden">("to-bottom");
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 2000);
-    return () => clearTimeout(timer);
+    
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      if (scrollY < 200) {
+        setScrollMode("to-bottom");
+      } else if (scrollY + windowHeight > documentHeight - 600) {
+        setScrollMode("to-top");
+      } else {
+        setScrollMode("hidden");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const handleWhatsAppClick = () => {
@@ -19,9 +42,44 @@ export default function WhatsAppButton() {
     window.open(whatsappUrl, "_blank");
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollToBottom = () => {
+    window.scrollTo({ 
+      top: document.documentElement.scrollHeight, 
+      behavior: "smooth" 
+    });
+  };
+
   return (
     <>
       {/* WhatsApp Button */}
+      {/* ... previous content ... */}
+      
+      {/* Dynamic Scroll Button */}
+      <div
+        className={`fixed bottom-24 right-7 z-40 transition-all duration-700 transform flex flex-col items-center gap-2 ${
+          scrollMode !== "hidden" && isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0 pointer-events-none"
+        }`}
+      >
+        <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] [writing-mode:vertical-lr] mb-1 animate-pulse">
+          {scrollMode === "to-bottom" ? "Explore" : "To Top"}
+        </span>
+        <button
+          onClick={scrollMode === "to-bottom" ? scrollToBottom : scrollToTop}
+          className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/50 shadow-sm flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/30 hover:shadow-md transition-all duration-300 group"
+          aria-label={scrollMode === "to-bottom" ? "Scroll to bottom" : "Scroll to top"}
+        >
+          {scrollMode === "to-bottom" ? (
+            <ChevronDown className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-0.5" />
+          ) : (
+            <ChevronUp className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-0.5" />
+          )}
+        </button>
+      </div>
+
       <div
         className={`fixed bottom-6 right-6 z-50 transition-all duration-500 transform ${
           isVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
